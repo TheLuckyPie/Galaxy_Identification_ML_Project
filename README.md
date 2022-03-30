@@ -7,7 +7,7 @@ Your task is to develop your very own machine learning project for one of three 
 * Incident Angle prediction of astroparticles (regression)
 * Galaxy classification (classification/regression)
 
-Each task has its very own dataset and list of objectives. The main criteria for these projects isn't necessarily getting the best performance by some metric, but logical development and trying out different techniques! Everything you try should be defined with functions and we would liek to see the history of how your code evolved using git version control!
+Each task has its very own dataset and list of objectives. The main criteria for these projects isn't necessarily getting the best performance by some metric, but logical development and trying out different techniques! Everything you try should be defined with functions and we would like to see the history of how your code evolved using git version control!
 
 We will give a few pointers of things to try out, but top marks will be achieved by experimenting with approaches not covered in the course - just like any programming course there is far too much to cover in a single semester, and the internet has vast amounts of support and ideas - give them a go!
 

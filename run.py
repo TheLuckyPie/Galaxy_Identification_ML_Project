@@ -4,6 +4,8 @@
 # code easier to maintian/extend but also easier for you to collaborate on projects with others.
 # What we demonstrate here isn't the best possible way to work on a project, but it should be a simple easy way to get
 # started.
+# The below is a skeleton of code that can be changed however you want. The arguments to classes and functions here are
+# what placeholders, you can change this as you see fit.
 import os
 
 import tensorflow as tf
@@ -11,7 +13,10 @@ import numpy as np
 import random
 
 #get your util functions
-from utils import load_data
+from eval import evaluate_my_model
+from models import MyCustomModel
+from utils import load_data, split_data
+
 
 #from models import myfunction1, myfunction2, ...
 
@@ -32,12 +37,17 @@ def run():
     data = load_data()
 
     # Define training/validation/test sets
+    train_data, valid_data, test_data = split_data(data)
 
     # Preprocess all of the data based on the train set
+
+    # Define the model
+    model = MyCustomModel()
 
     # Fit the model
 
     # Evaluate
+    evaluate_my_model(model, test_data)
 
 if __name__ == '__main__':
     run()
