@@ -83,7 +83,7 @@ Infer the x-y coordinates of the incident particle at the top and bottom of the 
 
 #### Studies
 * Check if your model is biased to certain areas of the calorimeter.
-* Can all four coordiantes sensibly be regressed together? Or are there better ways of regressing the target?
+* Can all four coordinates sensibly be regressed together? Or are there better ways of regressing the target?
 * How accurately can the true trajectory be inferred from the values your model predicts? How can you measure this?
 
 ## Galaxy identification
@@ -93,14 +93,14 @@ Infer the x-y coordinates of the incident particle at the top and bottom of the 
 In this project you will be looking at images of galaxies. The challenge in this project has been adapted from a [kaggle challenge](https://www.kaggle.com/c/galaxy-zoo-the-galaxy-challenge/data). The tasks you will pursue in this project are simpler than those in the original challenge, which was defined as follows.
 The dataset for this challenge was generated using crowdsourcing, where non-experts were asked to assign images following a specific taxonomy. Each image was then assigned a float between zero and one based on the fraction of participants who assigned the image to a given class. 
 This means that, instead of having binary labels, the targets of this dataset are floating point numbers. 
-The full project is then a regression problem, but here we break it down into a much simpler classification and regression taks.
+The full project is then a regression problem, but here we break it down into a much simpler classification and regression tasks.
 These do not include the full complexity of the original challenge, if you want to try and tackle this and submit this as your project, you are welcome to.
 
 Note that the corresponding kaggle challenge is out of date now, and the techniques that won this challenge will not be as interesting for you to consider. For image classification, there are other challenges on kaggle that are more recent, and will be much more interesting to look at for finding useful techniques.
 
 
 ### Aims
-This project is broken down into three subtasks as follows. For this task it is not important how many of these you work on, if you work a lot on oly one task that is not a problem.
+This project is broken down into three subtasks as follows. For this project it is not important how many of these you work on, if you focus on one task that will not be a problem.
 
 ## Exercise 1
 In the first exercise, we only consider the top-level question (3 answers) and samples where at least 80 % of participants gave the same answer.
@@ -124,4 +124,4 @@ Again, all images can be used.
 #### Studies
 * Does the same architecture (with a different output layer) perform well for all three tasks?
 * Can you use augmentations to improve the classification performance? (Especially at test time).
-* Can you use the output of a model from one task to inform the prediction of the next task?
+* Can you use the output of a model from one task to inform the prediction of the next
