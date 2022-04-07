@@ -76,7 +76,7 @@ The dataset also contains all of these constituents per jet. These could be used
 ## Incidence angle prediction of astroparticles passing through a detector
 
 ### Dataset
-In this project you will be looking at calorimeter images and energies measured in the DAMPE space telescope calorimeter. This dataset consists of (simulated) hits in the DAMPE calorimeter. As the data is simulated, the true location of the incoming particle is known, and it's trajectory can be inferred from the x-y coordinates at the top and bottom of the calorimeter.
+In this project you will be looking at calorimeter images and energies measured in the [DAMPE](http://dpnc.unige.ch/dampe/) space telescope calorimeter. DAMPE is a satellite based experiment designed to search for dark matter signatures. This dataset consists of (simulated) hits in the DAMPE calorimeter. As the data is simulated, the true location of the incoming particle is known, and it's trajectory can be inferred from the x-y coordinates at the top and bottom of the calorimeter.
 
 ### Aims
 Infer the x-y coordinates of the incident particle at the top and bottom of the calorimeter using the image and scalar values.
