@@ -13,6 +13,13 @@ We will give a few pointers of things to try out, but top marks will be achieved
 
 You are also asked to write a report to document what you have tried and why, the results they produced, and challenges you faced.
 
+First you should choose one of the projects detailed below! It is up to you which you work on, but you should only work on one!
+
+Each project has its own docker container which you can pull, which will contain the data and a small notebook showing how to open and work with the data.
+
+You should then create a repository from this project, which is where you will upload your code and results.
+
+
 ## Developing the project
 
 Although you have used notebooks in the examples classes, we would now like to focus on code being written in a repository - this means having a "run" file, which is your python executable, and additional functions/classes spread out over files. Try not to define one long function, but split things up into logical components that take arguments.
@@ -24,6 +31,8 @@ You can develop the code in whichever editor or IDE you like and to access it fr
 docker run -v /path/to/project:/home/project python /home/project/run.py --arguments
 ```
 remember when doing this that any data under `/path/to/project/data` will now be at `/home/project/data` in the container!
+
+### Developing with an IDE
 
 Another convenient way to edit and develop is with VS code. It is posible to develop within a container by using the `remote containers` extension. To set this up just add the folder and file
 `
@@ -37,6 +46,8 @@ to your repository with the following content
 }
 ```
 
+Docker contaiers can also be used with other software to make development much easier. There is no right or wrong way to work in this course, so use whichever environments you are most familiar with, even vim.
+
 ## Repository setup
 
 You should make a "fork" of this repository into your own personal gitlab area. The button to do this to the top right of the repository page, in line with the repository name.
@@ -45,7 +56,49 @@ You can then clone the project (get a local copy) and work on it locally using `
 
 Marks will be awarded for using git to manage your code development, and not just adding everything at the end of the project. Towards the end of the project we will announce how you can submit the project through gitlab for grading.
 
-# Projects
+## Working on the project
+
+You should work on the project at your own pace and in your own time. During the rest of the semester we will use the examples class as a chance for you to ask for advice and discuss the projects. We will also happily answer any questions on moodle.
+
+Work on the projects on your laptop (or if you have access to a cluster this is even better!) and develop code to train the models for the aims of the project. You do not need to complete all aims, and you can focus on trying many different approaches on one aim. 
+
+The code should be documented and it should be explained how to run the code.
+
+## Project report
+
+You are asked to write a report on the project as part of the course. This should document the studies you have performed, including figures and tables of results, as well as motivation and description.
+
+This report should be no longer than 20 pages in the main body, and written with Latex.
+
+## Project presentation
+
+You are also asked to prepare a presentation on your project, explaining the approach you have taken and results you have achieved. 
+
+More information about this will come towards the end of the semester.
+
+## Grading details
+
+You will receive marks for the report, the presentation and the project itself.
+
+The minimum requirements for the project are
+* Reable code in the repository which loads data, trains a model, and evaluates its performance
+* A trained model which is not just random guesses
+* A notebook will be accepted as long as functions are defined in external files (e.g. util.py). However, top marks will not be awarded.
+  * When working on a project it is strongly advised not to use notebooks beyond testing.
+
+You will receive marks for
+* Use of functions and classes
+* Using a range of layers, architectures and strategies in the project (either for one aim or across multiple)
+* Ease of configurability to change the model (use of config files or options are a bonus!)
+* Comparing multiple approaches with several metrics, not just the loss
+
+You will receive bonus marks for
+* Using techniques and approaches not covered in the exercises
+* Having a flexible framework avoiding hardcoded values and options, and instead using config files
+
+You will not be judged based on the final performance of the model in your grade, but instead the ideas you try and how you structure the project.
+
+# Project details
 
 ## Jet identification in ATLAS
 
