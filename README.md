@@ -91,6 +91,7 @@ You will receive marks for
 * Using a range of layers, architectures and strategies in the project (either for one aim or across multiple)
 * Ease of configurability to change the model (use of config files or options are a bonus!)
 * Comparing multiple approaches with several metrics, not just the loss
+* Making sure your results are reproducible (set random seeds and save configurations!)
 
 You will receive bonus marks for
 * Using techniques and approaches not covered in the exercises
