@@ -103,6 +103,8 @@ You will not be judged based on the final performance of the model in your grade
 
 ## Jet identification in ATLAS
 
+Location: `registry.gitlab.unige.ch/ai-in-physics-course/exercises/project-jettag:latest`
+
 ### Dataset
 
 A set of events describing large jets which have been recorded by the ATLAS detector. Your task is to identify the origin of the jet:
@@ -129,6 +131,8 @@ The dataset also contains all of these constituents per jet. These could be used
 
 ## Incidence angle prediction of astroparticles passing through a detector
 
+Location: `registry.gitlab.unige.ch/ai-in-physics-course/exercises/project-dampe:latest`
+
 ### Dataset
 In this project you will be looking at calorimeter images and energies measured in the [DAMPE](http://dpnc.unige.ch/dampe/) space telescope calorimeter. DAMPE is a satellite based experiment designed to search for dark matter signatures. This dataset consists of (simulated) hits in the DAMPE calorimeter. As the data is simulated, the true location of the incoming particle is known, and it's trajectory can be inferred from the x-y coordinates at the top and bottom of the calorimeter.
 
@@ -141,6 +145,8 @@ Infer the x-y coordinates of the incident particle at the top and bottom of the 
 * How accurately can the true trajectory be inferred from the values your model predicts? How can you measure this?
 
 ## Galaxy identification
+
+Location: `registry.gitlab.unige.ch/ai-in-physics-course/exercises/project-galaxies:latest`
 
 ### Dataset
 
