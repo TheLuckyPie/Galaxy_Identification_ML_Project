@@ -1,5 +1,12 @@
 # Physics Applications of AI Project
 
+<details>
+<summary>Show/Hide Table of Contents</summary>
+
+[[_TOC_]]
+
+</details>
+
 ## Overview
 
 Your task is to develop your very own machine learning project for one of three applications (your choice!):
@@ -99,11 +106,17 @@ You will receive bonus marks for
 
 You will not be judged based on the final performance of the model in your grade, but instead the ideas you try and how you structure the project.
 
+---
+
 # Project details
 
 ## Jet identification in ATLAS
 
 Location: `registry.gitlab.unige.ch/ai-in-physics-course/exercises/project-jettag:latest`
+
+Classification task to identify the origin of large showers of particles recorded in the ATLAS detector!
+
+Identifying heavy particles decaying into particles which are close to oneanother is a key tool when hunting for new physics processes! And is the focus of lots of ML interest, both [within the collaboration](https://arxiv.org/abs/1808.07858) and the [wider community](https://arxiv.org/abs/1902.09914)!
 
 ### Dataset
 
@@ -112,7 +125,7 @@ A set of events describing large jets which have been recorded by the ATLAS dete
 * W/Z boson (decaying to two quarks)
 * Top quark (decaying to a b-quark and a W boson, which then decays into two quarks)
 
-You have access to a set of variables which can help separate the jets, as well its four-vector in the form of its mass, the transverse momentum ($p_T$), and angles in the detector of the jet ($\eta$, $\phi$). These four quantities $(m,p_T,\eta,\phi)$ and can be converted to other four vector representations such as $(E,p_x,p_y,p_y)$.
+You have access to a set of variables which can help separate the jets, as well its four-vector in the form of its mass, the transverse momentum ($`p_T`$), and angles in the detector of the jet ($`\eta`$, $`\phi`$). These four quantities $`(m,p_T,\eta,\phi)`$ and can be converted to other four vector representations such as $`(E,p_x,p_y,p_y)`$.
 
 The other variables are known as "substructure" variables, as they describe properties of the jet not directly related to its momentum, for example how the energy is distributed within the jet or whether it has a multiple-prong structure. They are calculated using "constituents" of the jet, which are the energy deposits recorded by the detector which are grouped (clustered) together to build the jet. 
 
@@ -129,12 +142,19 @@ The dataset also contains all of these constituents per jet. These could be used
 * What is the performance as a function of the jet four momenta components? Look in particular at the mass!
 * Can you somehow use the constituents themselves to improve performance?
 
+
 ## Incidence angle prediction of astroparticles passing through a detector
 
 Location: `registry.gitlab.unige.ch/ai-in-physics-course/exercises/project-dampe:latest`
 
+With the DAMPE detector we hope to find evidence of Dark Matter in space. The detector is a satelite in space with a calorimeter, but being in space particles could come from any direction, perfect for a regression task!
+
 ### Dataset
-In this project you will be looking at calorimeter images and energies measured in the [DAMPE](http://dpnc.unige.ch/dampe/) space telescope calorimeter. DAMPE is a satellite based experiment designed to search for dark matter signatures. This dataset consists of (simulated) hits in the DAMPE calorimeter. As the data is simulated, the true location of the incoming particle is known, and it's trajectory can be inferred from the x-y coordinates at the top and bottom of the calorimeter.
+In this project you will be looking at calorimeter images and energies measured in the [DAMPE](http://dpnc.unige.ch/dampe/) space telescope calorimeter. DAMPE is a satellite based experiment designed to search for dark matter signatures.
+
+This dataset consists of (simulated) hits in the DAMPE calorimeter, which can be visualised as an image! Each pixel in the image is one readout-cell of the calorimeter, think of it as a camera with a very coarse granularity, but which is sensitive to particles not light. 
+
+As the data is simulated, the true location of the incoming particle is known, and it's trajectory can be inferred from the x-y coordinates at the top and bottom of the calorimeter.
 
 ### Aims
 Infer the x-y coordinates of the incident particle at the top and bottom of the calorimeter using the image and scalar values.
@@ -148,13 +168,18 @@ Infer the x-y coordinates of the incident particle at the top and bottom of the 
 
 Location: `registry.gitlab.unige.ch/ai-in-physics-course/exercises/project-galaxies:latest`
 
+In this project you will be looking at images of galaxies and classifiying them into categories based on their shape.
+
+This is a very challenging task for machine learning, as even for humans we can't be 100% sure exactly what type of galaxy we see in an image - if we only see it side on how do we know if it is a spiral or uniform disk! 
+
 ### Dataset
 
-In this project you will be looking at images of galaxies. The challenge in this project has been adapted from a [kaggle challenge](https://www.kaggle.com/c/galaxy-zoo-the-galaxy-challenge/data). The tasks you will pursue in this project are simpler than those in the original challenge, which was defined as follows.
 The dataset for this challenge was generated using crowdsourcing, where non-experts were asked to assign images following a specific taxonomy. Each image was then assigned a float between zero and one based on the fraction of participants who assigned the image to a given class. 
 This means that, instead of having binary labels, the targets of this dataset are floating point numbers. 
 The full project is then a regression problem, but here we break it down into a much simpler classification and regression tasks.
 These do not include the full complexity of the original challenge, if you want to try and tackle this and submit this as your project, you are welcome to.
+
+The challenge in this project has been adapted from a [kaggle challenge](https://www.kaggle.com/c/galaxy-zoo-the-galaxy-challenge/data). The tasks you will pursue in this project are simpler than those in the original challenge, which was defined as follows.
 
 Note that the corresponding kaggle challenge is out of date now, and the techniques that won this challenge will not be as interesting for you to consider. For image classification, there are other challenges on kaggle that are more recent, and will be much more interesting to look at for finding useful techniques.
 
