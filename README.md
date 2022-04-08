@@ -35,7 +35,7 @@ To keep the environment consistent please write the code to use the packages con
 
 You can develop the code in whichever editor or IDE you like and to access it from the container to run you can do the following
 ```
-docker run -v /path/to/project:/home/project python /home/project/run.py --arguments
+docker run -v /path/to/project:/home/project registry.gitlab.unige.ch/my/container:latest python /home/project/run.py --arguments
 ```
 remember when doing this that any data under `/path/to/project/data` will now be at `/home/project/data` in the container!
 
