@@ -12,7 +12,7 @@
 Your task is to develop your very own machine learning project for one of three applications (your choice!):
 * Jet identification at the ATLAS experiment (classification)
 * Incident Angle prediction of astroparticles (regression)
-* Galaxy classification (classification/regression)
+* Galaxy classification (classification)
 
 Each task has its very own dataset and list of objectives. The main criteria for these projects isn't necessarily getting the best performance by some metric, but logical development and trying out different techniques! Everything you try should be defined with functions and we would like to see the history of how your code evolved using git version control!
 
@@ -29,7 +29,7 @@ You should then create a repository from this project, which is where you will u
 
 ## Developing the project
 
-Although you have used notebooks in the examples classes, we would now like to focus on code being written in a repository - this means having a "run" file, which is your python executable, and additional functions/classes spread out over files. Try not to define one long function, but split things up into logical components that take arguments.
+Although you have used notebooks in the examples classes, we would prefer structured code in a repository - this means having a "run" file, which is your python executable, and additional functions/classes spread out over files. Try not to define one long function, but split things up into logical components that take arguments.
 
 To keep the environment consistent please write the code to use the packages contained in the docker container.
 
@@ -77,11 +77,13 @@ You are asked to write a report on the project as part of the course. This shoul
 
 This report should be no longer than 20 pages in the main body, and written with Latex.
 
+To submit the report, simply add the pdf to your repository when you share the code!
+
 ## Project presentation
 
 You are also asked to prepare a presentation on your project, explaining the approach you have taken and results you have achieved. 
 
-More information about this will come towards the end of the semester.
+These presentations will be on 9th and 16th May 2023.
 
 ## Grading details
 
@@ -112,8 +114,6 @@ You will not be judged based on the final performance of the model in your grade
 
 ## Jet identification in ATLAS
 
-Location: `registry.gitlab.unige.ch/ai-in-physics-course/exercises/project-jettag:latest`
-
 Classification task to identify the origin of large showers of particles recorded in the ATLAS detector!
 
 Identifying heavy particles decaying into particles which are close to oneanother is a key tool when hunting for new physics processes! And is the focus of lots of ML interest, both [within the collaboration](https://arxiv.org/abs/1808.07858) and the [wider community](https://arxiv.org/abs/1902.09914)!
@@ -125,11 +125,13 @@ A set of events describing large jets which have been recorded by the ATLAS dete
 * W/Z boson (decaying to two quarks)
 * Top quark (decaying to a b-quark and a W boson, which then decays into two quarks)
 
-You have access to a set of variables which can help separate the jets, as well its four-vector in the form of its mass, the transverse momentum ($`p_T`$), and angles in the detector of the jet ($`\eta`$, $`\phi`$). These four quantities $`(m,p_T,\eta,\phi)`$ and can be converted to other four vector representations such as $`(E,p_x,p_y,p_y)`$.
+You have access to a set of variables which can help separate the jets, as well its four-vector in the form of its mass, the transverse momentum ($p_T$), and angles in the detector of the jet ($\eta$, $\phi$). These four quantities $(m,p_T,\eta,\phi)$ and can be converted to other four vector representations such as $(E,p_x,p_y,p_y)$.
 
 The other variables are known as "substructure" variables, as they describe properties of the jet not directly related to its momentum, for example how the energy is distributed within the jet or whether it has a multiple-prong structure. They are calculated using "constituents" of the jet, which are the energy deposits recorded by the detector which are grouped (clustered) together to build the jet. 
 
 The dataset also contains all of these constituents per jet. These could be used with more advanced architectures or used to create "image" representations of jets.
+
+You can download the dataset from [here](https://drive.switch.ch/index.php/s/oHBmc1NVv8zAztt)
 
 ### Aims
 
@@ -145,8 +147,6 @@ The dataset also contains all of these constituents per jet. These could be used
 
 ## Incidence angle prediction of astroparticles passing through a detector
 
-Location: `registry.gitlab.unige.ch/ai-in-physics-course/exercises/project-dampe:latest`
-
 With the DAMPE detector we hope to find evidence of Dark Matter in space. The detector is a satelite in space with a calorimeter, but being in space particles could come from any direction, perfect for a regression task!
 
 ### Dataset
@@ -154,7 +154,11 @@ In this project you will be looking at calorimeter images and energies measured 
 
 This dataset consists of (simulated) hits in the DAMPE calorimeter, which can be visualised as an image! Each pixel in the image is one readout-cell of the calorimeter, think of it as a camera with a very coarse granularity, but which is sensitive to particles not light. 
 
+The images are tricky, however, as each row is only sensitive to one direction, so as you move down in z, you alternate between x and y coordinate information.
+
 As the data is simulated, the true location of the incoming particle is known, and it's trajectory can be inferred from the x-y coordinates at the top and bottom of the calorimeter.
+
+You can download the data from [here](https://drive.switch.ch/index.php/s/RrWjbj1UxhO5FKV).
 
 ### Aims
 Infer the x-y coordinates of the incident particle at the top and bottom of the calorimeter using the image and scalar values.
@@ -165,8 +169,6 @@ Infer the x-y coordinates of the incident particle at the top and bottom of the 
 * How accurately can the true trajectory be inferred from the values your model predicts? How can you measure this?
 
 ## Galaxy identification
-
-Location: `registry.gitlab.unige.ch/ai-in-physics-course/exercises/project-galaxies:latest`
 
 In this project you will be looking at images of galaxies and classifiying them into categories based on their shape.
 
@@ -183,6 +185,7 @@ The challenge in this project has been adapted from a [kaggle challenge](https:/
 
 Note that the corresponding kaggle challenge is out of date now, and the techniques that won this challenge will not be as interesting for you to consider. For image classification, there are other challenges on kaggle that are more recent, and will be much more interesting to look at for finding useful techniques.
 
+You can download the image datasets from [here](https://www.kaggle.com/c/galaxy-zoo-the-galaxy-challenge/data) and the labels from [here](https://drive.switch.ch/index.php/s/UDMdgAxeYLSCzyU).
 
 ### Aims
 This project is broken down into three subtasks as follows. For this project it is not important how many of these you work on, if you focus on one task that will not be a problem.
