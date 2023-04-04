@@ -191,19 +191,19 @@ You can download the image datasets from [here](https://www.kaggle.com/c/galaxy-
 ### Aims
 This project is broken down into three subtasks as follows. For this project it is not important how many of these you work on, if you focus on one task that will not be a problem.
 
-## Exercise 1
+#### Exercise 1
 In the first exercise, we only consider the top-level question (3 answers) and samples where at least 80 % of participants gave the same answer.
 We assumed this to be a certain classification and transformed them to one-hot encoded labels.
 The task for this part of the exercise is to use the image to predict the corresponding label.
 
-## Exercise 2
+#### Exercise 2
 
 In the second exercise, we consider the second layer of questions from the original kaggle challenge, i.e. Q2 and Q7.
 Here, we do not use one-hot encoded labels, but the original floats that range between 0 and 1, thus making the classification problem a regression problem.
 Here we can use all images in the dataset (no separate copy is produced).
 You should try to make sure that the output of the classifier matches the hierarchical structure of the questions, e.g. the the summed values for Q2 equal the value for answer Q1.1.
 
-## Exercise 3
+#### Exercise 3
 
 In the third exercise, we further include questions Q6 and Q8 regarding oddities.
 You will have to improve your architecture in order to correctly classify rare object classes.
