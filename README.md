@@ -26,6 +26,7 @@ Each project has its own docker container which you can pull, which will contain
 
 You should then create a repository from this project, which is where you will upload your code and results.
 
+Have a look at the data exploration notebooks in the folders to choose a project you are interested in!
 
 ## Developing the project
 
