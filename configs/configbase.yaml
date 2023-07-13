@@ -1,0 +1,23 @@
+#Primary Parameters
+seed: 623                             #Seed
+investigation: 1                      #InvestigationID: 1 = Basic, 2=
+
+
+#Directory Configurations
+datafolder: 'data'                    #Directory of Data Folder
+resdir: 'results'                     #Directory of Results Folder
+imgdir:  'images_training_rev1'       #Directory of Image Folder
+labels:  'labels.csv'                 #Directory of Labels File
+
+#Dataset Configurations
+val_split: 0.2                        #Validation Dataset Split
+batch_size: 64                        #Batch Size
+
+image_prop:
+  img_size: 64                        #Size of image ex. 64x64
+  color: 'grayscale'                  #Color of image: 'grayscale', 'RGB'
+
+label_prop:
+  onehotcoded: True                   #If True will convert everything above threshold to 1, else 0
+  confidence: 0.8                     #Confidence Threshold
+  classes: ['Class1.1','Class1.2']   #Classes to Consider from labels.csv 1: ['Class1.1','Class1.2'], 2: ['Class2.1','Class2.2', 'Class7.1','Class7.2','Class7.3']
