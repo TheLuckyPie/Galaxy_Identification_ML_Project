@@ -2,3 +2,6 @@
 
 def evaluate_my_model(model, test_data):
     return 0
+
+
+print("hi")
