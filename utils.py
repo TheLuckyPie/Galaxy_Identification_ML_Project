@@ -4,6 +4,9 @@
 
 import os
 import yaml
+import tensorflow as tf
+import glob
+import pandas as pd
 
 def config_load(config_name):
         """
@@ -23,19 +26,14 @@ def import_parameters(config):
 
         seed = config['seed']
         
-        val_split = config['val_split']
-        batch_size = config['batch_size']
-
-        image_param = config['image_prop']
-        img_size = image_param['img_size']
-        color = image_param['color']
-
-        label_param = config['label_prop']
-        oneHot = label_param['onehotcoded']
-        confidence = label_param['confidence']
-        classes = label_param['classes']
+        #Loading different parameter categories
+        dataset_param = config['datasetparam']
+        image_param = config['imageparam']
+        label_param = config['labelparam']
+        model_param = config['modelparam']
+        training_param = config['trainingparam']
         
-        return seed, val_split, batch_size, img_size, color, oneHot, confidence, classes
+        return seed, dataset_param, image_param, label_param, model_param, training_param
 
 def set_dirs(config):
         """
@@ -49,14 +47,15 @@ def set_dirs(config):
 
         return data_dir, image_dir, label_file, res_dir
 
-def decode_downsample(data,size=64):
+def decode_downsample(data,size=64,color='grayscale'):
         """
         Function to take a file path (tensor) open the image, decode, downsample, and return as greyscale size = size in w and h for downsample
         """
         img = tf.io.read_file(data)
         img = tf.io.decode_jpeg(img,channels=3)
         img = tf.image.resize(img, [size, size])
-
+        if color == 'grayscale':
+                img = tf.reduce_mean(img,axis=-1,keepdims=True)
         return img
 
 def get_labels(label_file, classes, confidence, oneHot):
@@ -67,8 +66,9 @@ def get_labels(label_file, classes, confidence, oneHot):
         labels = pd.read_csv(label_file).set_index('GalaxyID')[classes]
         labels = labels[(labels[classes] > confidence).any(axis=1)]
         if oneHot == True:
-               labels = labels.applymap(lambda x: 1.0 if x > confidence else 0.0)
- 
+                labels = labels.applymap(lambda x: 1.0 if x > confidence else 0.0)
+                labels['Class'] = np.argmax(labels.values, axis=1)
+                labels.drop(columns=labels.columns[:-1], inplace=True)
         return labels
 
 def img_label(img,labels):
@@ -88,44 +88,36 @@ def trim_file_list(files,labels):
         
         return files
 
-def load_data(image_dir, label_file, classes, confidence, oneHot, img_size):
+def load_data(image_dir, label_file, label_param, image_param): # classes, confidence, oneHot, img_size, color) 
         """
         Function to filter labels, only consider images that are in filtered labels list, creates an image and label dataset and combines them into a single one.
         """
 
-        labels = get_labels(label_file, classes, confidence, oneHot)
+        labels = get_labels(label_file, label_param['classes'], label_param['confidence'], label_param['onehotcoded'])
         
         files = glob.glob(f'{image_dir}/*')
         files = trim_file_list(files, labels)
         print(files[:5])
 
-        image_ds = tf.data.experimental.from_list(files).map(decode_downsample)
+        
+        image_ds = tf.data.experimental.from_list(files).map(lambda x: decode_downsample(x, image_param['img_size'], image_param['color']))
         label_ds = tf.data.experimental.from_list([img_label(f,labels) for f in files])
         dataset = tf.data.Dataset.zip((image_ds,label_ds))
 
         return dataset
 
-def split_data(dataset, val_split):
+def split_data(dataset, dataset_param, seed): #dataset_param['val_split'], dataset_param['batch_size'], dataset_param['shuffle'], seed)
         """
-        Function to split dataset into train, validation and test dataset based on val_split = test_split percentage
+        Function to shuffle, split dataset into train, validation and test dataset based on val_split = test_split percentage
         """
+        #if dataset_param['shuffle']:
+        #        dataset = tf.random.shuffle(dataset, seed = seed)
+
         dataset_len = len(dataset)
-        val_len = int(dataset_len*val_split)
+        val_len = int(dataset_len*dataset_param['val_split'])
 
-        val_ds = dataset.take(val_len).batch(64)
-        test_ds = dataset.skip(val_len).take(val_len).batch(64)
-        train_ds = dataset.skip(2*val_len).batch(64)
+        val_ds = dataset.take(val_len).batch(dataset_param['batch_size'])
+        test_ds = dataset.skip(val_len).take(val_len).batch(dataset_param['batch_size'])
+        train_ds = dataset.skip(2*val_len).batch(dataset_param['batch_size'])
 
-        return train_ds, val_ds, train_ds
-
-
-
-"""
-class MyUsefulClass():
-    """Define useful objects."""
-    def __init__(self, x):
-        self.x = x
-
-    def useful_method(self):
-        return self.x * 2
-"""
+        return train_ds, val_ds, test_ds

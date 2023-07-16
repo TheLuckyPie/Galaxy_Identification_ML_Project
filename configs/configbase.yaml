@@ -10,14 +10,40 @@ imgdir:  'images_training_rev1'       #Directory of Image Folder
 labels:  'labels.csv'                 #Directory of Labels File
 
 #Dataset Configurations
-val_split: 0.2                        #Validation Dataset Split
-batch_size: 64                        #Batch Size
+datasetparam:
+  val_split: 0.2                       #Validation Dataset Split
+  batch_size: 64                       #Batch Size
+  shuffle: True                        #Whether or not to shuffle the dataset before splitting data
 
-image_prop:
+imageparam:
   img_size: 64                        #Size of image ex. 64x64
   color: 'grayscale'                  #Color of image: 'grayscale', 'RGB'
 
-label_prop:
+labelparam:
   onehotcoded: True                   #If True will convert everything above threshold to 1, else 0
   confidence: 0.8                     #Confidence Threshold
-  classes: ['Class1.1','Class1.2']   #Classes to Consider from labels.csv 1: ['Class1.1','Class1.2'], 2: ['Class2.1','Class2.2', 'Class7.1','Class7.2','Class7.3']
+  classes: ['Class1.1','Class1.2']    #Classes to Consider from labels.csv 1: ['Class1.1','Class1.2'], 2: ['Class2.1','Class2.2', 'Class7.1','Class7.2','Class7.3']
+
+#Model Parameters
+modelparam:                           
+  name: 'CNNFull'                     #Name of Model
+  augments: 
+    active: False                     #Sets Activation Status of Augmentation Layer
+    rotation: 0.5                     #Sets RandomRotation parameter
+    zoom: 0.25                        #Sets Zoom parameter
+    contrast: 0.5                     #Sets Contrast parameter
+  rescale: False                      #Defines if Rescale to 1.0/255 should be active
+  batchnormactive: False              #Defines Activation Status of Batch Normalization Layer
+  dropoutactive: False                #Defines Activation Status of Dropout Layer
+  dropoutrate: 0.2                    #Defines Dropout Rate
+  outputlevels: 1                     #Defines Output Layer
+  outputactivation: 'sigmoid'         #Defines Output Layer Activation Function
+
+#Training parameters
+trainingparam:
+  comploss: 'binary_crossentropy'     #Defines loss
+  earlystopactive: True               #Defines Activation Status of Early Stop Layer
+  earlystoppatience: 5                #Defines Early stop Patience
+  epochs: 30                          #Defines number of Epochs for Training
+  stepspe: 50                         #Defines Steps per Epoch
+
