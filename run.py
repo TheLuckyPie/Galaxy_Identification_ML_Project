@@ -10,15 +10,14 @@ import numpy as np
 import random
 import pandas as pd
 import glob
+from sklearn.metrics import confusion_matrix, classification_report
 
 #get your util functions
 #from eval import evaluate_my_model
 #from models import MyCustomModel
 #from utils import config_load, import_parameters
 #from models import Model_Builder
-
-
-tf.get_logger().setLevel('ERROR') #Ensures that no error message clogs up output
+tf.get_logger().setLevel('ERROR')
 
 #from models import myfunction1, myfunction2, ...
 
@@ -32,7 +31,6 @@ def run():
 
     #Set Directories and make results directory if it doesn't exist
     data_dir, image_dir, label_file, res_dir = set_dirs(config)
-    os.makedirs(res_dir, exist_ok=True)
 
     #Seed Configuration to produce reproducible code
     tf.random.set_seed(seed)
@@ -51,22 +49,17 @@ def run():
 
     model.compile(optimizer='adam',
         loss=training_param['comploss'], #TYPE?
-        metrics=['accuracy'])
+        metrics=['accuracy', 'AUC'])
 
-    model.fit(train_data, epochs=5, steps_per_epoch = 20, validation_data = valid_data)
+    #Fitting Model
+    history, model_res_filepath, checkpoint_filepath = Model_Fitter(model, train_data, valid_data, model_param, training_param, res_dir)
 
-    model.evaluate(test_data)
-    """""
-    # Preprocess all of the data based on the train set
-
-    # Define the model
-    model = MyCustomModel()
-
-    # Fit the model
-
-    # Evaluate
-    evaluate_my_model(model, test_data)
- """
+    #Evaluating + Plotting to Results Folder
+    plot_history(history, model_res_filepath, training_param, model_param)
+    #model.load_weights(model_res_filepath)
+    plot_roc_auc(model, test_data, model_res_filepath)
+    #model.evaluate(test_data)
+    
 #if __name__ == '__main__':
 #config = config_load(input('Input file name')+".yaml")
 

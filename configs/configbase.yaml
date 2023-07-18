@@ -27,6 +27,7 @@ labelparam:
 #Model Parameters
 modelparam:                           
   name: 'CNNFull'                     #Name of Model
+  filters: [32,64,128]                #Sets Filter List for Conv2D Layers
   augments: 
     active: False                     #Sets Activation Status of Augmentation Layer
     rotation: 0.5                     #Sets RandomRotation parameter
@@ -44,6 +45,5 @@ trainingparam:
   comploss: 'binary_crossentropy'     #Defines loss
   earlystopactive: True               #Defines Activation Status of Early Stop Layer
   earlystoppatience: 5                #Defines Early stop Patience
-  epochs: 30                          #Defines number of Epochs for Training
-  stepspe: 50                         #Defines Steps per Epoch
-
+  epochs: 5                           #Defines number of Epochs for Training
+  stepspe: 20                         #Defines Steps per Epoch
