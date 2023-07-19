@@ -7,7 +7,7 @@ import yaml
 import tensorflow as tf
 import glob
 import pandas as pd
-import matplotlib.pyplot as plt
+import numpy as np
 
 def config_load(config_name):
         """
@@ -117,7 +117,7 @@ def split_data(dataset, dataset_param, seed): #dataset_param['val_split'], datas
         Function to shuffle, split dataset into train, validation and test dataset based on val_split = test_split percentage
         """
         #if dataset_param['shuffle']:
-        #        dataset = tf.random.shuffle(dataset, seed = seed)
+        #        dataset = tf.random.shuffle(dataset, seed = seed)  ### Disabled this option due to conflicts with evaluation functions,
 
         dataset_len = len(dataset)
         val_len = int(dataset_len*dataset_param['val_split'])

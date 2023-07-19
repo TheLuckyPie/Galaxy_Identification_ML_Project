@@ -13,9 +13,7 @@ Same with Everything
 
 ### Regression Classification
 
-Using best model (Best AUC curve):
-
-Training Model Ground-Up
+Using best model and Training Model Ground-Up.
 
 Seeing if model with pretrained layers + extra dense layers works well.
 
