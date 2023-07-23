@@ -8,12 +8,15 @@ from datetime import datetime
 import time
 import numpy as np
 
-def Model_Builder(image_param, model_param, augments, seed): #Model_Builder(img_size, color, model_name = 'Model', classes, bnActive = False, doActive = False, dropoutrate = 0.25, agActive = False, Rescaling = False):
+tf.get_logger().setLevel('ERROR')
+
+def Model_Builder(image_param, model_param, augments, seed, dataset_param): #Model_Builder(img_size, color, model_name = 'Model', classes, bnActive = False, doActive = False, dropoutrate = 0.25, agActive = False, Rescaling = False):
     """
     Function to Build the Model based on configuration parameters 
     """
     #List of Filters
     FilterList = model_param['filters']
+    DenseFilterList = model_param['densefilters']
     
     #Defining Input for Model
     if image_param['color'] == 'grayscale':
@@ -28,29 +31,21 @@ def Model_Builder(image_param, model_param, augments, seed): #Model_Builder(img_
         x = layers.RandomFlip(seed=seed)(x)
         x = layers.RandomContrast(augments['contrast'], seed= seed)(x)
         x = layers.RandomZoom(augments['zoom'], seed = seed)(x)
-
-    #Normalizing to (0,1) if allowed
-    if model_param['rescale']:
         x = layers.Rescaling(1./255)(x)
 
     #Adding standard CNN layers
     for i in range(len(FilterList)):
         x = layers.Conv2D(FilterList[i], (3,3), padding = 'valid', activation = 'relu')(x)
-        if model_param['batchnormactive']:
-            x = layers.BatchNormalization()(x)
         x = layers.MaxPooling2D((2,2))(x)
    
-   #Flattening
+    #Flattening
     x = layers.Flatten()(x)
 
-    #Adding Droupout Layers if Active
-    if model_param['dropoutactive']:
-        x = layers.Dropout(model_param['dropoutrate'])(x)
-   
-    #Fully connected Layers
-    x = layers.Dense(64, activation = 'relu')(x)
-    
-    #TO ADD: REGRESSION OPTIONS
+    #Fully connected Layers and adding Dropout layers if Active
+    for i in range(len(DenseFilterList)):
+        x = layers.Dense(DenseFilterList[i], activation ='relu')(x)
+        if model_param['dropoutactive']:
+            x = layers.Dropout(model_param['dropoutrate'])(x)
 
     #Defining Output for Model
     outputs = layers.Dense(model_param['outputlevels'], activation = model_param['outputactivation'])(x)
@@ -58,11 +53,10 @@ def Model_Builder(image_param, model_param, augments, seed): #Model_Builder(img_
     #Defining Model based on created layers
     model = Model(inputs, outputs, name = model_param['name'])
 
-
     return model
 
 
-def Model_Fitter(model, train_data, valid_data, model_param, training_param, res_dir):
+def Model_Fitter(model, train_data, valid_data, model_param, training_param, res_dir,dataset_param):
     """
         Function to fit the Model, making sure to save checkpoints and model evaluation parameters 
     """
@@ -71,19 +65,35 @@ def Model_Fitter(model, train_data, valid_data, model_param, training_param, res
     checkpoint_filepath = os.path.join(model_res_filepath, 'checkpoints')
     os.makedirs(model_res_filepath, exist_ok=True)
     os.makedirs(checkpoint_filepath, exist_ok=True)
-
+    checkpoint_file = os.path.join(checkpoint_filepath, model_param['name'] + '_best_weights.h5')
     #Checkpoints
-    model_checkpoints = tf.keras.callbacks.ModelCheckpoint(checkpoint_filepath, save_weights_only = True, monitor = 'val_auc', save_best_only=True, mode = 'max')
+    if dataset_param['regressionmodel']: 
+        MonitorVal = 'val_loss'
+        MonitorMode = 'min'
+    else:
+        MonitorVal = 'val_auc'
+        MonitorMode = 'max'
+    
+    model_checkpoints = tf.keras.callbacks.ModelCheckpoint(checkpoint_file, save_best_only=True, monitor = MonitorVal, mode = MonitorMode)
+    csv_logger = tf.keras.callbacks.CSVLogger(os.path.join(model_res_filepath,model_param['name'] + '_log.csv'))
     
     #Defining callback
-    callbacks=[model_checkpoints, tf.keras.callbacks.CSVLogger(os.path.join(model_res_filepath,model_param['name'] + '_log.csv'))]
+    if training_param['earlystopactive']:
+        early_stopping = tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=training_param['earlystoppatience'], mode='min', verbose=1)
+        callbacks=[model_checkpoints, csv_logger, early_stopping]
+    else:
+        callbacks=[model_checkpoints, csv_logger] 
     
     #Fitting Data and recording time elapsed
     start_time = time.time()
-    history = model.fit(train_data, epochs=training_param['epochs'], validation_data = valid_data, callbacks = callbacks)
+    history = model.fit(train_data, epochs=training_param['epochs'], validation_data = valid_data, callbacks = callbacks, shuffle = training_param['shuffle'])
     
+
+    if training_param['earlystopactive']:
+        num_epochs_trained = early_stopping.stopped_epoch + 1
+
     end_time = time.time()
     train_time = end_time - start_time
     training_time = np.array([int(train_time // 60), int(train_time % 60)])
 
-    return history, model_res_filepath, checkpoint_filepath, training_time
+    return history, model_res_filepath, checkpoint_file, training_time

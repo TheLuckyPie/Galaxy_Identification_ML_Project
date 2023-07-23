@@ -1,0 +1,47 @@
+#Primary Parameters
+seed: 623                             #Seed
+
+#Directory Configurations
+datafolder: 'data'                    #Directory of Data Folder
+resdir: 'results'                     #Directory of Results Folder
+imgdir:  'images_training_rev1'       #Directory of Image Folder
+labels:  'labels.csv'                 #Directory of Labels File
+
+#Dataset Configurations
+datasetparam:
+  val_split: 0.2                       #Validation Dataset Split
+  batch_size: 64                       #Batch Size
+  regressionmodel: True                 #Is it regression?
+imageparam:
+  img_size: 64                        #Size of image ex. 64x64
+  color: 'RGB'                        #Color of image: 'grayscale', 'RGB'
+
+labelparam:
+  onehotcoded: False                   #If True will convert everything above threshold to 1, else 0
+  confidence: 0.70                     #Confidence Threshold
+  classes: ['Class2.1','Class2.2', 'Class7.1','Class7.2']    #Classes to Consider from labels.csv 1: ['Class1.1','Class1.2'], 2: ['Class2.1','Class2.2', 'Class7.1','Class7.2']
+
+#Model Parameters
+modelparam:                           
+  name: 'RegC_RGB_70_Aug_BinCArch'      #Name of Model
+  savemodel: True                    #Sets whether or not to save the model
+  filters: [32,64,128]                #Sets Filter List for Conv2D Layers
+  densefilters: [128]           #Sets Filter List for Dense Layers
+  augments: 
+    active: True                     #Sets Activation Status of Augmentation Layer
+    rotation: 0.5                     #Sets RandomRotation parameter
+    zoom: 0.25                        #Sets Zoom parameter
+    contrast: 0.5                     #Sets Contrast parameter
+  dropoutactive: False                #Defines Activation Status of Dropout Layer
+  dropoutrate: 0.3                    #Defines Dropout Rate
+  outputlevels: 4                     #Defines Output Layer
+  outputactivation: 'linear'         #Defines Output Layer Activation Function
+  
+#Training parameters
+trainingparam:
+  comploss: 'mean_squared_error'     #Defines loss
+  earlystopactive: False              #Defines Activation Status of Early Stop Layer
+  earlystoppatience: 7                #Defines Early stop Patience
+  epochs: 25                           #Defines number of Epochs for Training
+  shuffle: True                       #Whether or not to shuffle the test dataset during training
+

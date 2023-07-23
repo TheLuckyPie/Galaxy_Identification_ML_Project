@@ -1,0 +1,7 @@
+,Metric,Score
+0,MSE,0.014502448
+1,MAE,0.068075707
+2,R2,0.848477541
+3,Training Time (s),1929
+4,Accuracy,0.931783472
+5,F1_Score,0.93175006

@@ -1,7 +1,0 @@
-,Metric,Score
-0,Accuracy,0.9338
-1,Precision,0.972
-2,Recall,0.928
-3,F1_Score,0.9495
-4,ROC_AUC,0.9368
-5,Training Time (s),1082.0

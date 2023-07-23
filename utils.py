@@ -9,13 +9,48 @@ import glob
 import pandas as pd
 import numpy as np
 
-def config_load(config_name):
+tf.get_logger().setLevel('ERROR')
+
+def config_prompt(config_folder):
+        """
+        Function to prompt user to select config when program is run
+        """
+
+        config_files = sorted(glob.glob(os.path.join(config_folder,'*.yaml')))
+        print("Please select a config file by typing its corresponding number (ex: 3):")
+
+        for cid, file in enumerate(config_files, start = 1):     
+                print(str(cid) + ". " + str(os.path.basename(file)))
+        print("For short testing of the script, it is recommended to choose either of the 3Epoch_ configs (1 (Binary Class) or 2 (Regression)) due to 3 minute training times")
+        print("(vs. 20+ minutes for the others.)")
+        while True:
+                try:    
+                        choice = int(input("Enter number: "))
+                        if 1 <= choice <=  len(config_files):
+                                selected_config = config_files[choice - 1]
+                                return selected_config
+                        else:
+                                print("Please enter a valid input")
+                except ValueError:
+                        print("Please enter a valid input")
+
+def open_directory_in_explorer(directory_path):
+        """
+        Function to open results folder when program is finished for user access
+        """
+
+        if os.path.exists(directory_path) and os.path.isdir(directory_path):
+                os.startfile(directory_path)
+        else:
+                print(f"Error: '{directory_path}' is not a valid directory path.")
+
+def config_load(selected_config):
         """
         Function to load YAML config file.
         """
 
-        config_path = os.path.join('configs', config_name)
-        with open(config_path,"r") as config_file:
+        #config_path = os.path.join('configs', config_name)
+        with open(selected_config,"r") as config_file:
                 config = yaml.safe_load(config_file)
 
         return config
@@ -66,8 +101,10 @@ def get_labels(label_file, classes, confidence, oneHot):
         """
         Function to import labels and if one-hot labels are required (1.0 or 0.0) based on confidence, then set labels accordingly.
         """
-
         labels = pd.read_csv(label_file).set_index('GalaxyID')[classes]
+        # Normalize each row to compensate for deleted columns
+        labels = labels.div(labels.sum(axis=1), axis=0)
+        # Only consider rows containing a confidence level higher than a certain amount.
         labels = labels[(labels[classes] > confidence).any(axis=1)]
         if oneHot == True:
                 labels = labels.applymap(lambda x: 1.0 if x > confidence else 0.0)
@@ -94,7 +131,7 @@ def trim_file_list(files,labels):
         
         return files
 
-def load_data(image_dir, label_file, label_param, image_param): # classes, confidence, oneHot, img_size, color) 
+def load_data(image_dir, label_file, label_param, image_param):
         """
         Function to filter labels, only consider images that are in filtered labels list, creates an image and label dataset and combines them into a single one.
         """
@@ -103,8 +140,7 @@ def load_data(image_dir, label_file, label_param, image_param): # classes, confi
         
         files = glob.glob(f'{image_dir}/*')
         files = trim_file_list(files, labels)
-        print(files[:5])
-
+        #print(files[:5])
         
         image_ds = tf.data.experimental.from_list(files).map(lambda x: decode_downsample(x, image_param['img_size'], image_param['color']), num_parallel_calls = tf.data.AUTOTUNE)
         label_ds = tf.data.experimental.from_list([img_label(f,labels) for f in files])
