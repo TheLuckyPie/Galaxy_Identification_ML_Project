@@ -138,7 +138,7 @@ def load_data(image_dir, label_file, label_param, image_param):
 
         return dataset
 
-def split_data(dataset, dataset_param, seed): #dataset_param['val_split'], dataset_param['batch_size'], dataset_param['shuffle'], seed)
+def split_data(dataset, dataset_param, seed): 
         """
         Function to shuffle, split dataset into train, validation and test dataset based on val_split = test_split percentage
         """

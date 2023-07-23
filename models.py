@@ -10,7 +10,7 @@ import numpy as np
 
 tf.get_logger().setLevel('ERROR')
 
-def Model_Builder(image_param, model_param, augments, seed, dataset_param): #Model_Builder(img_size, color, model_name = 'Model', classes, bnActive = False, doActive = False, dropoutrate = 0.25, agActive = False, Rescaling = False):
+def Model_Builder(image_param, model_param, augments, seed, dataset_param): 
     """
     Function to Build the Model based on configuration parameters 
     """
