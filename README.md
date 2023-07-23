@@ -9,7 +9,7 @@
 
 ## How to run
 
-This was tested and appeared to work on the devcontainer provided in: 
+This was tested and appeared to work on the devcontainer provided in (I developed in a conda environment although I think its simpler to use the devcontainer for consistency; Let me know if something is wrong using the devcontainer!): 
 ```
 {
     "image": "registry.gitlab.unige.ch/ai-in-physics-course/exercises/base:latest",
@@ -18,7 +18,7 @@ This was tested and appeared to work on the devcontainer provided in:
 ```
 Before running the program, ensure that the directory `data/image_training_rev1/*` contains the ~61,000 images from the training image dataset. This dataset is split into training, validation and testing automatically so downloading the additional test dataset is not necessary. There are around 300 images already in the folder that were placed to ensure that the dev container executes the function during testing, but these are not sufficient to replicate the data seen in the report. The labels file is small, and so is already provided in the data folder.
 
-To run the program, run `run.py`. After around 10-15 seconds as it loads the depedencies, it will prompt you with a list of configs to run the file. These are configurable and are found in the `configs/` directory. You can carefully modify the ones you want, although it is not recommended without thoroughly checking as it may break the program. Two short models are given that allow for quick testing (in binary classification using Ex.1 labels and one in regression using Ex. 2 labels) that use 3 epochs of training rather than 25. The others are the configs that were used for the report:
+To run the program, run `run.py`. After around 10-15 seconds as it loads the depedencies, it will prompt you with a list of configs to run the file. These are configurable and are found in the `configs/` directory. You can carefully modify the ones you want, although it is not recommended without thoroughly checking as it may break the program. Two short models are given that allow for quick testing (in binary classification using Ex.1 labels and one in regression using Ex. 2 labels) that use 3 epochs of training rather than 25 (using 3 epochs was around ~3 Minutes training time, while 25, which you may also use to reproduce the data seen in the report had around ~25min-1hr training time). The others are the configs that were used for the report.
 
 ```
 Please select a config file by typing its corresponding number (ex: 3):
@@ -41,6 +41,11 @@ Please select a config file by typing its corresponding number (ex: 3):
 17. RegC_RGB_70_Everything.yaml
 18. RegC_RGB_70_Nothing.yaml
 ```
+Please refer to the report for further information about the key:
+* BinC/RegC: Binary Classification Task (Q1) or Regression Task (Q2)
+* Gray/RGB: If image was shifted to grayscale or left in RGB
+* 0/50/70/80: Confidence Threshold for labels
+* Nothing/Aug/Drop/Everything: No regularization, Data Augmentation Layer only, Dropout layer only, Both Augmentation and Droupout
 
 Once selected, the program will automatically run through the pipeline, and produce a folder with the model name and time in the `results` directory. You will be provided with metrics, a log, a pdf confusion matrix, some pdf graphs pertaining to the training evolution and a saved model.
 
