@@ -63,7 +63,6 @@ def run(selected_config):
 
     tf.keras.backend.clear_session()
     print("\nDone!")
-    open_directory_in_explorer(model_res_filepath) 
     
 if __name__ == '__main__':
     selected_config = config_prompt("configs")

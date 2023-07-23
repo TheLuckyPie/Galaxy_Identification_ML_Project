@@ -34,16 +34,6 @@ def config_prompt(config_folder):
                 except ValueError:
                         print("Please enter a valid input")
 
-def open_directory_in_explorer(directory_path):
-        """
-        Function to open results folder when program is finished for user access
-        """
-
-        if os.path.exists(directory_path) and os.path.isdir(directory_path):
-                os.startfile(directory_path)
-        else:
-                print(f"Error: '{directory_path}' is not a valid directory path.")
-
 def config_load(selected_config):
         """
         Function to load YAML config file.
@@ -118,7 +108,7 @@ def img_label(img,labels):
          Function to turn image path into ID, and return labels from labels
         """
 
-        id = int(img.split('\\')[-1].split('.')[0])
+        id = int(img.split('/')[-1].split('.')[0])
 
         return labels.loc[id]
 
@@ -127,7 +117,7 @@ def trim_file_list(files,labels):
         Function to trim a list of files based on whether the file name is in the ID of labels_df
         """
 
-        files = [file for file in files if int(file.split('\\')[-1].split('.')[0]) in labels.index]
+        files = [file for file in files if int(file.split('/')[-1].split('.')[0]) in labels.index]
         
         return files
 
